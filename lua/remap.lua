@@ -1,4 +1,3 @@
-vim.g.mapleader = " "
 vim.keymap.set("n","<leader>pv",vim.cmd.Ex)
 
 vim.keymap.set("v","J",":m '>+1<CR>gv=gv")
@@ -61,6 +60,19 @@ vim.api.nvim_set_keymap('n', '<leader>H', ':vertical resize -5<CR>', { noremap =
 vim.api.nvim_set_keymap('n', '<leader>K', ':resize +5<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>J', ':resize -5<CR>', { noremap = true, silent = true })
 
+
+local mark = require("harpoon.mark")
+local ui = require("harpoon.ui")
+
+vim.keymap.set("n","<leader>a",mark.add_file)
+vim.keymap.set("n","<C-e>",ui.toggle_quick_menu)
+
+vim.keymap.set("n","<C-h>",function() ui.nav_file(1) end)
+vim.keymap.set("n","<C-t>",function() ui.nav_file(2) end)
+vim.keymap.set("n","<C-n>",function() ui.nav_file(3) end)
+vim.keymap.set("n","<C-s>",function() ui.nav_file(4) end)
+vim.keymap.set("n","<A-i>",function() ui.nav_prev() end)
+vim.keymap.set("n","<A-o>",function() ui.nav_next() end)
 
 
 vim.api.nvim_create_autocmd('filetype', {

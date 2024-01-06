@@ -5,8 +5,8 @@ return {
     {
         "L3MON4D3/LuaSnip",
         dependencies = {
-            'saadparwaiz1/cmp_luasnip',
-            "rafamadriz/friendly-snippets"
+            "saadparwaiz1/cmp_luasnip",
+            "rafamadriz/friendly-snippets",
         },
     },
 
@@ -14,6 +14,7 @@ return {
         "hrsh7th/nvim-cmp",
         config = function()
             local cmp = require("cmp")
+            local luasnip = require("luasnip")
             require("luasnip.loaders.from_vscode").lazy_load()
             cmp.setup({
                 snippet = {
@@ -31,13 +32,34 @@ return {
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
                     ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+
+                    ["<Tab>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        elseif luasnip.expand_or_jumpable() then
+                            luasnip.expand_or_jump()
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+
+                    ["<S-Tab>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        elseif luasnip.jumpable(-1) then
+                            luasnip.jump(-1)
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+
                 }),
+
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
                     { name = "luasnip" }, -- For luasnip users.
-                    },
-                    {
-                        { name = "buffer" },
+                }, {
+                    { name = "buffer" },
                 }),
             })
 
@@ -45,8 +67,8 @@ return {
             cmp.setup.filetype("gitcommit", {
                 sources = cmp.config.sources({
                     { name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-                    }, {
-                        { name = "buffer" },
+                }, {
+                    { name = "buffer" },
                 }),
             })
 
@@ -63,11 +85,10 @@ return {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = cmp.config.sources({
                     { name = "path" },
-                    }, {
-                        { name = "cmdline" },
+                }, {
+                    { name = "cmdline" },
                 }),
             })
-
         end,
-    }
+    },
 }
