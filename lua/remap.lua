@@ -1,3 +1,16 @@
+vim.api.nvim_create_autocmd('filetype', {
+	pattern = 'netrw',
+	desc = 'Better mappings for netrw',
+	callback = function()
+		local bind = function(lhs, rhs)
+			vim.keymap.set('n', lhs, rhs, {remap = true, buffer = true})
+		end
+
+		-- edit new file
+		bind('f', '%')
+	end
+})
+
 vim.keymap.set("n","<leader>pv",vim.cmd.Ex)
 
 vim.keymap.set("v","J",":m '>+1<CR>gv=gv")
@@ -74,18 +87,8 @@ vim.keymap.set("n","<C-s>",function() ui.nav_file(4) end)
 vim.keymap.set("n","<A-i>",function() ui.nav_prev() end)
 vim.keymap.set("n","<A-o>",function() ui.nav_next() end)
 
+vim.keymap.set("n","<leader>gp",":G push<CR>")
 
-vim.api.nvim_create_autocmd('filetype', {
-	pattern = 'netrw',
-	desc = 'Better mappings for netrw',
-	callback = function()
-		local bind = function(lhs, rhs)
-			vim.keymap.set('n', lhs, rhs, {remap = true, buffer = true})
-		end
 
-		-- edit new file
-		bind('f', '%')
-	end
-})
 
 
