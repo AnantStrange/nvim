@@ -88,6 +88,7 @@ vim.keymap.set("n","<A-i>",function() ui.nav_prev() end)
 vim.keymap.set("n","<A-o>",function() ui.nav_next() end)
 
 vim.keymap.set("n","<leader>gp",":G push<CR>")
+vim.api.nvim_set_keymap('n', '<leader>z', ':resize 999<CR>', { noremap = true, silent = true })
 
 
 
