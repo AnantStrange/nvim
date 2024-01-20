@@ -4,7 +4,7 @@ set.autoindent = true
 set.shiftwidth = 4
 
 set.wrap = true
-set.textwidth=40
+set.textwidth=120
 set.linebreak = true
 
 vim.wo.number = true
@@ -28,7 +28,7 @@ vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = "40"
+vim.opt.colorcolumn = "120"
 -- vim.opt.signcolumn = 'yes'
 vim.opt.timeoutlen = 600
 
