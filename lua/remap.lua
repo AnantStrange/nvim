@@ -60,10 +60,11 @@ vim.keymap.set("n","<leader>vca",function() vim.lsp.buf.code_action() end)
 vim.keymap.set("n","<leader>vr",function() vim.lsp.buf.references() end)
 vim.keymap.set("n","<leader>vrn",function() vim.lsp.buf.rename() end)
 vim.keymap.set("i","<C-h>",function() vim.lsp.buf.signature_help() end)
-vim.keymap.set("n","<leader>f",function() vim.lsp.buf.format() end)
+vim.keymap.set("n","<leader>f",function() vim.lsp.buf.format({timeout_ms = 2000}) end)
 vim.keymap.set("n","<leader>gi",function()  vim.lsp.buf.implementation() end)
 
 
+-- vim.api.nvim_set_keymap('n', '<leader>f', ':Format<CR>', { noremap = true })
 
 
 vim.api.nvim_set_keymap('n', '<leader>h', ':split<CR>', { noremap = true, silent = true })
@@ -89,6 +90,22 @@ vim.keymap.set("n","<A-o>",function() ui.nav_next() end)
 
 vim.keymap.set("n","<leader>gp",":G push<CR>")
 vim.api.nvim_set_keymap('n', '<leader>z', ':resize 999<CR>', { noremap = true, silent = true })
+
+-- Map <leader>R to rename the current file
+vim.api.nvim_set_keymap('n', '<leader>R', [[:lua RenameCurrentFile()<CR>]], { noremap = true, silent = true })
+
+-- Function to rename the current file
+function RenameCurrentFile()
+    local current_name = vim.fn.expand('%:p')
+    local new_name = vim.fn.input('New file name: ', current_name)
+
+    if new_name ~= '' and new_name ~= current_name then
+        vim.fn.system('mv ' .. vim.fn.shellescape(current_name) .. ' ' .. vim.fn.shellescape(new_name))
+        vim.cmd('e ' .. new_name)
+    else
+        print('Invalid file name or same as the current name. Rename aborted.')
+    end
+end
 
 
 
