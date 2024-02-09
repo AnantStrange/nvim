@@ -4,7 +4,7 @@ set.autoindent = true
 set.shiftwidth = 4
 
 set.wrap = true
-set.textwidth=120
+set.textwidth=80
 set.linebreak = true
 
 vim.wo.number = true
@@ -21,17 +21,17 @@ vim.opt.swapfile = true
 vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.cache/nvim/undodir"
 vim.opt.undofile = true
-vim.opt.hlsearch = true
-vim.opt.incsearch = true
 vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = "120"
+vim.opt.colorcolumn = "80"
 -- vim.opt.signcolumn = 'yes'
-vim.opt.timeoutlen = 600
+vim.opt.timeoutlen = 400
 
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
 
 
 

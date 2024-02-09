@@ -9,6 +9,11 @@ return{
                 null_ls.builtins.formatting.black,
                 null_ls.builtins.formatting.isort,
                 null_ls.builtins.diagnostics.eslint_d,
+                null_ls.builtins.formatting.rustfmt,
+                null_ls.builtins.diagnostics.ltrs,
+                null_ls.builtins.code_actions.ltrs,
+                null_ls.builtins.diagnostics.clang_check,
+                null_ls.builtins.formatting.clang_format,
             }
         })
     end

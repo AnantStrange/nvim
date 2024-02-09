@@ -39,12 +39,71 @@ return {
             end,
             settings = {
                 intelephense = {
-                    stubs = { "memcached", "random", "mt_rand", "bcmath", "bz2", "calendar", "Core", "curl", "date", "dba", "dom", "enchant", "fileinfo", "filter", "ftp", "gd", "gettext", "hash", "iconv", "imap", "intl", "json", "ldap", "libxml", "mbstring", "mcrypt", "mysql", "mysqli", "password", "pcntl", "pcre", "PDO", "pdo_mysql", "Phar", "readline", "recode", "Reflection", "regex", "session", "SimpleXML", "soap", "sockets", "sodium", "SPL", "standard", "superglobals", "sysvsem", "sysvshm", "tokenizer", "xml", "xdebug", "xmlreader", "xmlwriter", "yaml", "zip", "zlib", "wordpress", "woocommerce", },
+                    stubs = {
+                        "memcached",
+                        "random",
+                        "mt_rand",
+                        "bcmath",
+                        "bz2",
+                        "calendar",
+                        "Core",
+                        "curl",
+                        "date",
+                        "dba",
+                        "dom",
+                        "enchant",
+                        "fileinfo",
+                        "filter",
+                        "ftp",
+                        "gd",
+                        "gettext",
+                        "hash",
+                        "iconv",
+                        "imap",
+                        "intl",
+                        "json",
+                        "ldap",
+                        "libxml",
+                        "mbstring",
+                        "mcrypt",
+                        "mysql",
+                        "mysqli",
+                        "password",
+                        "pcntl",
+                        "pcre",
+                        "PDO",
+                        "pdo_mysql",
+                        "Phar",
+                        "readline",
+                        "recode",
+                        "Reflection",
+                        "regex",
+                        "session",
+                        "SimpleXML",
+                        "soap",
+                        "sockets",
+                        "sodium",
+                        "SPL",
+                        "standard",
+                        "superglobals",
+                        "sysvsem",
+                        "sysvshm",
+                        "tokenizer",
+                        "xml",
+                        "xdebug",
+                        "xmlreader",
+                        "xmlwriter",
+                        "yaml",
+                        "zip",
+                        "zlib",
+                        "wordpress",
+                        "woocommerce",
+                    },
                     files = {
                         maxSize = 5000000,
                     },
                     format = {
-                        braces = "k&r"
+                        braces = "k&r",
                     },
                 },
             },
@@ -52,6 +111,19 @@ return {
 
         lspconfig.tsserver.setup({
             capabilities = capabilities,
+        })
+
+        require("lspconfig").rust_analyzer.setup({
+            settings = {
+                ["rust-analyzer"] = {
+                    check = {
+                        command = "clippy",
+                    },
+                    diagnostics = {
+                        enable = true,
+                    },
+                },
+            },
         })
 
         for _, server in pairs(lspconfig) do

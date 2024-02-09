@@ -35,7 +35,7 @@ vim.keymap.set("n","<leader>O","ki")
 vim.keymap.set("n","<leader>G",":G<CR>")
 
 vim.keymap.set("n","<leader>w",":w<CR>")
-vim.keymap.set("n","<leader>wq",":wq<CR>")
+-- vim.keymap.set("n","<leader>wq",":wq<CR>")
 vim.keymap.set("n","<leader>q",":q!<CR>")
 
 vim.keymap.set("n","<leader>y","\"+y")
@@ -106,6 +106,10 @@ function RenameCurrentFile()
         print('Invalid file name or same as the current name. Rename aborted.')
     end
 end
+
+
+vim.api.nvim_set_keymap('v', '<leader>f', ':fold<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>F', ':foldopen<CR>', { noremap = true, silent = true })
 
 
 
