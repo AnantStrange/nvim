@@ -29,6 +29,7 @@ end
 
 return {
     'mhartington/formatter.nvim',
+    event = "VeryLazy",
 
     config = function()
         require("formatter").setup({
