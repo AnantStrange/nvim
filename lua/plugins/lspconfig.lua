@@ -113,6 +113,24 @@ return {
             capabilities = capabilities,
         })
 
+        lspconfig.gopls.setup{
+            capabilities = capabilities,
+            cmd = {"gopls"},
+            filetypes = {"go", "gomod"},
+            root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
+            settings = {
+                gopls = {
+                    completeUnimported = true,
+                    usePlaceholders = true,
+                    analyses = {
+                        unusedparams = true,
+                    },
+                    staticcheck = true,
+                },
+            },
+
+        }
+
         require("lspconfig").rust_analyzer.setup({
             settings = {
                 ["rust-analyzer"] = {

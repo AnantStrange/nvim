@@ -11,4 +11,5 @@ return {
 	},
 	{ "hrsh7th/cmp-path", event = "VeryLazy" },
 	{ "mhartington/formatter.nvim", event = "VeryLazy" },
+    { "preservim/tagbar" },
 }
