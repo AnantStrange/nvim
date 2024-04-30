@@ -20,21 +20,21 @@ return {
                 builtin.diagnostics({ bufnr = 0 })
             end)
             -- vim.keymap.set("n","<leader>fd",function() builtin.diagnostics() end)
-        --     vim.keymap.set("n", "s", function()
-        --         builtin.find_files({
-        --             cwd = vim.fn.argv()[1], -- Set current working directory to current buffer's directory
-        --             file_ignore_patterns = { "*.gif" }, -- Ignore .gif files
-        --         }, {
-        --             on_complete = function(selection)
-        --                 if selection then
-        --                     print("Selected file path: " .. selection.path)
+            --     vim.keymap.set("n", "s", function()
+            --         builtin.find_files({
+            --             cwd = vim.fn.argv()[1], -- Set current working directory to current buffer's directory
+            --             file_ignore_patterns = { "*.gif" }, -- Ignore .gif files
+            --         }, {
+            --             on_complete = function(selection)
+            --                 if selection then
+            --                     print("Selected file path: " .. selection.path)
 
-        --                     -- vim.cmd("vsplit " .. selection.path)
-        --                     -- vim.api.nvim_command("wincmd l")
-        --                 end
-        --             end,
-        --         })
-        --     end, { silent = false })
+            --                     -- vim.cmd("vsplit " .. selection.path)
+            --                     -- vim.api.nvim_command("wincmd l")
+            --                 end
+            --             end,
+            --         })
+            --     end, { silent = false })
         end,
     },
 
@@ -46,6 +46,18 @@ return {
                 extensions = {
                     ["ui-select"] = {
                         require("telescope.themes").get_dropdown({}),
+                    },
+                },
+                defaults = {
+                    mappings = {
+                        i = {
+                            -- Add a custom mapping for opening selected file in a new split to the right
+                            ["<C-s>"] = function(bufnr)
+                                local entry = require("telescope.actions.state").get_selected_entry()
+                                require("telescope.actions").close(bufnr)
+                                vim.cmd("botright vnew " .. entry.path)
+                            end,
+                        },
                     },
                 },
             })

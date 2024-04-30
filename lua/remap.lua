@@ -35,6 +35,7 @@ vim.keymap.set("n", "<leader>G", ":G<CR>")
 
 vim.keymap.set("n", "<leader>w", ":silent w<CR>", { silent = true })
 vim.keymap.set("n", "<leader>q", ":silent q!<CR>", { silent = true })
+vim.keymap.set("n", "<leader>Q", ":silent qa<CR>", { silent = true })
 
 vim.keymap.set("n", "<leader>y", '"+y')
 vim.keymap.set("v", "<leader>y", '"+y')
@@ -148,3 +149,4 @@ vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true,
 
 vim.api.nvim_set_keymap("t", "<C-d>", "<C-d>", { noremap = true })
 
+vim.keymap.set("n", "<C-s>", require("auto-session.session-lens").search_session, { noremap = true, })

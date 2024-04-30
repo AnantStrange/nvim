@@ -1,10 +1,12 @@
-return{
-    'nvim-lualine/lualine.nvim',
+return {
+    "nvim-lualine/lualine.nvim",
     enabled = false,
+    -- enabled = true,
     event = "VeryLazy",
     -- dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
     config = function()
-        require("lualine").setup()
-    end
+        require("lualine").setup({
+            sections = { lualine_c = { require("auto-session.lib").current_session_name } },
+        })
+    end,
 }
-

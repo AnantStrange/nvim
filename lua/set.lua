@@ -33,5 +33,6 @@ vim.opt.timeoutlen = 400
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 
