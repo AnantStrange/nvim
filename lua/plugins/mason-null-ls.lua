@@ -1,0 +1,26 @@
+return {
+	"jay-babu/mason-null-ls.nvim",
+	-- event = { "BufReadPre", "BufNewFile" },
+	dependencies = {
+		"williamboman/mason.nvim",
+		"nvimtools/none-ls.nvim",
+	},
+	config = function()
+		require("mason-null-ls").setup({
+			ensure_installed = {
+				"bash-language-server",
+				"black",
+				"clang-format",
+				"emmet-ls emmet_ls",
+				"eslint_d",
+				"intelephense",
+				"prettierd",
+				"rustfmt",
+				"shellcheck",
+				"stylua",
+				"typescript-language-server",
+				"vim-language-server",
+			},
+		})
+	end,
+}

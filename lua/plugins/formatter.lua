@@ -95,7 +95,16 @@ return {
                     function()
                         return {
                             exe = "clang-format",
-                            args = { "-i", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)) },
+                            args = { "-i", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),"-style='{IndentWidth: 4,BasedOnStyle: Google}'" },
+                            stdin = false,
+                        }
+                    end,
+                },
+                cpp = {
+                    function()
+                        return {
+                            exe = "clang-format",
+                            args = { "-i", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),"-style='{IndentWidth: 4,BasedOnStyle: Google}'" },
                             stdin = false,
                         }
                     end,

@@ -144,6 +144,8 @@ end
 vim.api.nvim_set_keymap("v", "<leader>f", ":fold<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>F", ":foldopen<CR>", { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap("n", "<leader>l", ":Lazy<CR>", { noremap = true, silent = true })
+
 vim.g.copilot_no_tab_map = true
 vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
