@@ -31,23 +31,9 @@ return {
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
+                    ["<C-y>"] = cmp.config.disable,
                     ["<CR>"] = cmp.mapping.confirm({ select = true }),
-                    -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 
-                    -- ["<Tab>"] = cmp.mapping(function(fallback)
-                    --     local copilot_keys = vim.fn["copilot#Accept"]()
-                    --     if cmp.visible() then
-                    --         cmp.select_next_item()
-                    --     elseif luasnip.expand_or_jumpable() then
-                    --         luasnip.expand_or_jump()
-                    --     elseif copilot_keys ~= "" and type(copilot_keys) == "string" then
-                    --         vim.api.nvim_feedkeys(copilot_keys, "i", true)
-                    --     else
-                    --         fallback()
-                    --     end
-                    -- end, {
-                    --     "i", "s",
-                    -- }),
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
