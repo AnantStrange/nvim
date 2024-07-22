@@ -27,8 +27,10 @@ vim.keymap.set("v", "<leader>c", ":CommentToggle<CR>")
 
 vim.keymap.set("x", "<leader>p", '"_dP')
 
-vim.keymap.set("n", "<leader>o", "ji")
-vim.keymap.set("n", "<leader>O", "ki")
+-- vim.keymap.set("n", "<leader>o", "ji")
+-- vim.keymap.set("n", "<leader>O", "ki")
+vim.keymap.set("n", "<leader>o", "o<esc>k")
+vim.keymap.set("n", "<leader>O", "O<esc>j")
 
 vim.keymap.set("n", "<leader>G", ":G<CR>")
 
@@ -59,18 +61,22 @@ vim.keymap.set("n", "<leader>vr", vim.lsp.buf.references)
 -- vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename )
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename )
 vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help)
--- vim.keymap.set("n", "<leader>f", vim.lsp.buf.format,{ timeout_ms = 2000 })
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>f", function()
+    vim.lsp.buf.format({async=true})
+end)
+
 vim.keymap.set("n", "<leader>gi",vim.lsp.buf.implementation)
 
--- vim.api.nvim_set_keymap('n', '<leader>f', ':Format<CR>', { noremap = true })
+vim.keymap.set("n", "<C-j>","5j")
+vim.keymap.set("n", "<C-k>","5k")
 
-vim.api.nvim_set_keymap("n", "<leader>h", ":split<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader><leader>", ":vsplit<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>L", ":vertical resize +5<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>H", ":vertical resize -5<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>K", ":resize +5<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>J", ":resize -5<CR>", { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>h", ":split<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader><leader>", ":vsplit<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>L", ":vertical resize +5<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>H", ":vertical resize -5<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>K", ":resize +5<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>J", ":resize -5<CR>", { noremap = true, silent = true })
 
 local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")
@@ -94,10 +100,10 @@ vim.keymap.set("n", "<A-i>", ui.nav_prev)
 vim.keymap.set("n", "<A-o>", ui.nav_next)
 
 vim.keymap.set("n", "<leader>gp", ":G push<CR>")
-vim.api.nvim_set_keymap("n", "<leader>z", ":resize 999<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>z", ":resize 999<CR>", { noremap = true, silent = true })
 
 -- Map <leader>R to rename the current file
-vim.api.nvim_set_keymap("n", "<leader>R", [[:lua RenameCurrentFile()<CR>]], { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>R", [[:lua RenameCurrentFile()<CR>]], { noremap = true, silent = true })
 
 -- Function to rename the current file
 function RenameCurrentFile()
@@ -112,18 +118,14 @@ function RenameCurrentFile()
     end
 end
 
-vim.api.nvim_set_keymap("v", "<leader>f", ":fold<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>F", ":foldopen<CR>", { noremap = true, silent = true })
+-- vim.keymap.set("v", "<leader>f", ":fold<CR>", { noremap = true, silent = true })
+vim.keymap.set({"v", "x"}, "<leader>f", ":'<,'>normal! zf<CR>", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "<leader>l", ":Lazy<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>F", ":foldopen<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>l", ":Lazy<CR>", { noremap = true, silent = true })
+vim.keymap.set("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+vim.keymap.set("t", "<C-d>", "<C-d>", { noremap = true })
+vim.keymap.set("n", "<C-s>", require("auto-session.session-lens").search_session, { noremap = true, })
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 vim.g.copilot_no_tab_map = true
-vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
-
-vim.api.nvim_set_keymap("t", "<C-d>", "<C-d>", { noremap = true })
-
-vim.keymap.set("n", "<C-s>", require("auto-session.session-lens").search_session, { noremap = true, })
-
-
-vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
--- vim.keymap.set("n", "-", "<CMD>Oil --float<CR>", { desc = "Open parent directory" })

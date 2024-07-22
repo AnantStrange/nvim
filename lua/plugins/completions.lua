@@ -12,6 +12,7 @@ return {
 
     {
         "hrsh7th/nvim-cmp",
+        event = "VeryLazy",
         config = function()
             local cmp = require("cmp")
             local luasnip = require("luasnip")

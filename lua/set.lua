@@ -4,7 +4,7 @@ set.autoindent = true
 set.shiftwidth = 4
 
 set.wrap = true
-set.textwidth=80
+set.textwidth = 80
 set.linebreak = true
 
 vim.wo.number = true
@@ -33,6 +33,11 @@ vim.opt.timeoutlen = 400
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
-
+vim.treesitter.language.register("css", "tcss")
+vim.filetype.add({
+    extension = {
+        tcss = "tcss",
+    }
+})

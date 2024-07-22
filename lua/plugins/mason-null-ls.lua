@@ -1,6 +1,7 @@
 return {
 	"jay-babu/mason-null-ls.nvim",
 	-- event = { "BufReadPre", "BufNewFile" },
+    event = "VeryLazy",
 	dependencies = {
 		"williamboman/mason.nvim",
 		"nvimtools/none-ls.nvim",
@@ -20,6 +21,7 @@ return {
 				"stylua",
 				"typescript-language-server",
 				"vim-language-server",
+                "python-lsp-server",
 			},
 		})
 	end,
