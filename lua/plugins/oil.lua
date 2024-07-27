@@ -17,7 +17,7 @@ return {
 			},
             view_options = {
                 show_hidden = true,
-                case_insensitive = false,
+                case_insensitive = true,
             }
 		})
 	end,

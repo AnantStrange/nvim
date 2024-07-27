@@ -1,5 +1,3 @@
-local util = require "formatter.util"
-
 local function prettier()
     return {
         exe = "prettier",
@@ -33,6 +31,7 @@ return {
     event = "VeryLazy",
 
     config = function()
+        local util = require "formatter.util"
         require("formatter").setup({
             logging = true,
             log_level = vim.log.levels.WARN,
