@@ -1,11 +1,11 @@
 return {
     {
-        "tpope/vim-fugitive",
-        keys = {
-            { "<leader>G", "<cmd>G<cr>", desc = "Git Fugitive" }, -- Trigger fugitive on <leader>G
-        },
+        "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
     },
-
+    {
+        "tpope/vim-fugitive",
+        event = "VeryLazy"
+    },
     {
         "theprimeagen/harpoon",
         keys = {
@@ -38,4 +38,47 @@ return {
             { "<leader>t", "<cmd>TagbarToggle<cr>", desc = "Toggle Tagbar" },
         },
     },
+    {
+        "mbbill/undotree",
+        cmd = "UndotreeToggle",
+    },
+    {
+        "rcarriga/nvim-notify"
+    },
+    {
+        'mrded/nvim-lsp-notify',
+        dependencies = { 'rcarriga/nvim-notify' },
+    },
+    {
+        'akinsho/toggleterm.nvim',
+        config = true,
+    },
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        keys = {
+            {
+                "<leader>?",
+                function()
+                    require("which-key").show({ global = false })
+                end,
+                desc = "Buffer Local Keymaps (which-key)",
+            },
+        },
+    },
+    {
+        'MeanderingProgrammer/markdown.nvim',
+        main = "render-markdown",
+        opts = {},
+        name = 'render-markdown',                                                  -- Only needed if you have another plugin named markdown.nvim
+        config = function()
+            require('render-markdown').setup({
+                heading = {
+                    width = 'block',
+                }
+            })
+            
+        end
+    }
+
 }

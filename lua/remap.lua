@@ -1,3 +1,12 @@
+-- Normal mode	n
+-- Visual mode	v
+-- Visual block mode x
+-- Select mode	s
+-- Insert mode	i
+-- Command-line mode	c
+-- Operator-pending mode	o
+-- Terminal mode	t
+
 -- Filetype specific autocommands
 vim.api.nvim_create_autocmd("filetype", {
     pattern = "netrw",
@@ -10,6 +19,46 @@ vim.api.nvim_create_autocmd("filetype", {
         bind("f", "%")
     end,
 })
+
+local function start_lsp_client_for_buf(bufnr)
+    local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+    local lspconfig = require("lspconfig")
+
+    -- Define LSP clients for each filetype
+    local lsp_clients = {
+        python = { "pyright", "pylsp" },
+        lua = { "lua_ls" },
+        -- Add other filetypes and their LSP clients here
+    }
+
+    -- Start LSP clients for the detected filetype
+    if lsp_clients[filetype] then
+        for _, lsp in ipairs(lsp_clients[filetype]) do
+            if lspconfig[lsp] then
+                lspconfig[lsp].setup({})
+                vim.cmd("LspStart " .. lsp)
+            end
+        end
+    end
+end
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+    pattern = "*",
+    callback = function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        start_lsp_client_for_buf(bufnr)
+    end
+})
+
+vim.api.nvim_create_autocmd("BufWinEnter", {
+    pattern = "*",
+    callback = function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        start_lsp_client_for_buf(bufnr)
+    end
+})
+
+
 
 -- General key mappings
 -- vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
@@ -50,17 +99,37 @@ vim.keymap.set("n", "<leader>q", ":silent q!<CR>", { silent = true })
 vim.keymap.set("n", "<leader>Q", ":silent qa<CR>", { silent = true })
 
 -- Clipboard operations
-vim.keymap.set("n", "<leader>y", '"+y')
-vim.keymap.set("v", "<leader>y", '"+y')
+vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y')
 vim.keymap.set("n", "<leader>Y", '"+Y')
 
 -- Search and replace
 vim.keymap.set("n", "<leader>s", ":%s/")
 vim.keymap.set("v", "<leader>s", ":s/")
 
--- Make file executable
--- vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x % > /dev/null 2>&1<CR>", { silent = true })
+local function insert_shebang_and_make_executable()
+    local filetype = vim.bo.filetype
+    local shebang_added = false
+
+    if filetype == 'python' then
+        vim.cmd('normal! ggO#!/usr/bin/env python3')
+        shebang_added = true
+    elseif filetype == 'sh' then
+        vim.cmd('normal! ggO#!/usr/bin/env sh')
+        shebang_added = true
+    end
+
+    if shebang_added then
+        -- Add a blank line after the shebang
+        vim.cmd('normal! o')
+        -- Return cursor to the original position
+        vim.cmd('normal! gg')
+    end
+
+    -- Make the file executable
+    vim.cmd('silent !chmod +x %')
+end
+
+vim.keymap.set('n', '<leader>x', insert_shebang_and_make_executable, { silent = true })
 
 
 -- Insert mode enhancements
@@ -73,7 +142,7 @@ vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol)
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action)
+vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>vr", vim.lsp.buf.references)
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help)
@@ -81,8 +150,8 @@ vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true })
 vim.keymap.set("n", "<leader>gi", vim.lsp.buf.implementation)
 
 -- Quick movement
-vim.keymap.set("n", "<C-j>", "5j")
-vim.keymap.set("n", "<C-k>", "5k")
+vim.keymap.set({ "n", "v", "x" }, "<C-j>", "5j")
+vim.keymap.set({ "n", "v", "x" }, "<C-k>", "5k")
 
 -- Window management
 vim.keymap.set("n", "<leader>h", ":split<CR>", { noremap = true, silent = true })
@@ -120,3 +189,15 @@ vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- Disable Copilot tab mapping
 vim.g.copilot_no_tab_map = true
+
+-- LspInfo
+vim.keymap.set("n", "<leader>i", "<cmd>LspInfo<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>al", "<cmd>LspLog<CR>", { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>z", "<cmd>UndotreeToggle<CR>", { noremap = true, silent = true })
+
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+vim.keymap.set('t', '<C-z>', '<C-\\><C-n><Cmd>ToggleTerm<CR>', { noremap = true, silent = true })
+vim.keymap.set({ "n", "i", "v", "x" }, "<leader>j", "<Cmd>ToggleTerm size=20<CR>")
+vim.keymap.set({ "n", "i", "v", "x" }, "<leader>J", "<Cmd>ToggleTerm direction=vertical size=70<CR>", { noremap = true, silent = true })
+vim.keymap.set({ "n", "i", "v", "x" }, "<leader>k", "<Cmd>TermSelect<CR>")

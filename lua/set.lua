@@ -1,11 +1,15 @@
-local set = vim.opt
+vim.g.tmux_navigator_no_mappings = 1
+vim.g.undodir = os.getenv("HOME") .. "/.cache/nvim/undodir"
+vim.g.undotree_SetFocusWhenToggle = 1
 
-set.autoindent = true
-set.shiftwidth = 4
+vim.opt.autoindent = true
+vim.opt.shiftwidth = 4
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
-set.wrap = true
-set.textwidth = 80
-set.linebreak = true
+vim.opt.wrap = true
+vim.opt.textwidth = 80
+vim.opt.linebreak = true
 
 vim.wo.number = true
 vim.wo.relativenumber = true

@@ -7,11 +7,14 @@ return {
     },
     {
         "williamboman/mason-lspconfig.nvim",
-		event = "VeryLazy",
+        event = "VeryLazy",
         config = function()
             local lspconfig = require("lspconfig")
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            -- local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilies())
+            local on_attach = function(client, bufnr)
+                vim.notify("LSP server attached: " .. client.name, "info", { title = "LSP Notification" })
+                vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+            end
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     "lua_ls",
@@ -34,12 +37,14 @@ return {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup({
                         capabilities = capabilities,
+                        on_attach = on_attach,
                     })
                 end,
 
                 ["lua_ls"] = function()
                     lspconfig.lua_ls.setup({
                         capabilities = capabilities,
+                        on_attach = on_attach,
                         settings = {
                             Lua = {
                                 diagnostics = {
@@ -53,11 +58,7 @@ return {
                 ["intelephense"] = function()
                     lspconfig.intelephense.setup({
                         capabilities = capabilities,
-                        on_attach = function(client, bufnr)
-                            -- Enable (omnifunc) completion triggered by <c-x><c-o>
-                            vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-                            vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", {})
-                        end,
+                        on_attach = on_attach,
                         settings = {
                             intelephense = {
                                 stubs = {
@@ -137,6 +138,7 @@ return {
                         cmd = { "gopls" },
                         filetypes = { "go", "gomod" },
                         root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
+                        on_attach = on_attach,
                         settings = {
                             gopls = {
                                 completeUnimported = true,
@@ -152,6 +154,7 @@ return {
 
                 ["rust_analyzer"] = function()
                     lspconfig.rust_analyzer.setup({
+                        on_attach = on_attach,
                         settings = {
                             ["rust-analyzer"] = {
                                 check = {
@@ -175,6 +178,7 @@ return {
                     end
 
                     lspconfig.pylsp.setup({
+                        on_attach = on_attach,
                         settings = {
                             pylsp = {
                                 plugins = {
