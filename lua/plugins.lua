@@ -4,7 +4,7 @@ return {
     },
     {
         "tpope/vim-fugitive",
-        event = "VeryLazy"
+        cmd = "G"
     },
     {
         "theprimeagen/harpoon",
@@ -28,10 +28,9 @@ return {
         end,
     },
     {
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim", --diagnotics inline
+        "hrsh7th/cmp-path",
         event = "VeryLazy",
     },
-    { "hrsh7th/cmp-path", event = "VeryLazy" },
     {
         "preservim/tagbar",
         keys = {
@@ -47,15 +46,16 @@ return {
     },
     {
         'mrded/nvim-lsp-notify',
+        event = { "LspAttach" },
         dependencies = { 'rcarriga/nvim-notify' },
     },
     {
         'akinsho/toggleterm.nvim',
+        cmd = { "ToggleTerm" },
         config = true,
     },
     {
         "folke/which-key.nvim",
-        event = "VeryLazy",
         keys = {
             {
                 "<leader>?",
@@ -68,17 +68,16 @@ return {
     },
     {
         'MeanderingProgrammer/markdown.nvim',
+        -- enabled = false,
         main = "render-markdown",
         opts = {},
-        name = 'render-markdown',                                                  -- Only needed if you have another plugin named markdown.nvim
+        name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
         config = function()
             require('render-markdown').setup({
                 heading = {
                     width = 'block',
                 }
             })
-            
         end
-    }
-
+    },
 }

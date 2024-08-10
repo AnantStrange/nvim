@@ -1,8 +1,7 @@
 return {
     "lukas-reineke/indent-blankline.nvim",
+    event = "BufReadPre",
     -- enabled = false,
-    enabled = true,
-    event = "VeryLazy",
 
     config = function()
         local highlight = {

@@ -1,7 +1,6 @@
 return {
     'mfussenegger/nvim-jdtls',
     -- paru -S jdtls  
-    -- event = "BufReadPre",  -- Start on buffer read
     ft = { "java" },       -- Only start for Java files
     config = function()
         require("jdtls").start_or_attach({
