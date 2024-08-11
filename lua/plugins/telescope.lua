@@ -21,22 +21,6 @@ return {
             vim.keymap.set("n", "<leader>fd", function()
                 builtin.diagnostics({ bufnr = 0 })
             end)
-            -- vim.keymap.set("n","<leader>fd",function() builtin.diagnostics() end)
-            --     vim.keymap.set("n", "s", function()
-            --         builtin.find_files({
-            --             cwd = vim.fn.argv()[1], -- Set current working directory to current buffer's directory
-            --             file_ignore_patterns = { "*.gif" }, -- Ignore .gif files
-            --         }, {
-            --             on_complete = function(selection)
-            --                 if selection then
-            --                     print("Selected file path: " .. selection.path)
-
-            --                     -- vim.cmd("vsplit " .. selection.path)
-            --                     -- vim.api.nvim_command("wincmd l")
-            --                 end
-            --             end,
-            --         })
-            --     end, { silent = false })
         end,
     },
 

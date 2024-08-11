@@ -56,6 +56,7 @@ return {
     },
     {
         "folke/which-key.nvim",
+        event = "VeryLazy",
         keys = {
             {
                 "<leader>?",
@@ -69,9 +70,7 @@ return {
     {
         'MeanderingProgrammer/markdown.nvim',
         -- enabled = false,
-        main = "render-markdown",
-        opts = {},
-        name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
+        ft = 'markdown',
         config = function()
             require('render-markdown').setup({
                 heading = {
@@ -79,5 +78,20 @@ return {
                 }
             })
         end
+    },
+    {
+        "SmiteshP/nvim-navbuddy",
+        keys = "Navbuddy",
+        dependencies = {
+            "SmiteshP/nvim-navic",
+            "MunifTanjim/nui.nvim"
+        },
+        opts = { lsp = { auto_attach = true } }
+    },
+    {
+        "m4xshen/hardtime.nvim",
+        event = "VeryLazy",
+        dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+        opts = {}
     },
 }
