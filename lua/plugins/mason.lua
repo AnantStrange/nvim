@@ -243,12 +243,6 @@ return {
                                     -- at project root, first we will look for 'setup.cfg' or .flake8
                                     -- and if not found then it follows these inline settings.
 
-                                    -- type checker
-                                    -- mypy = { enabled = true },
-                                    -- not working(working in mac at present in astronvim v4 didn't check on linux yet)
-                                    -- with this new way of configuring pylsp in neovim(AstroNvim)
-                                    -- i.e. pylsp = { settings = { pylsp = { plugins = "settings for pylsp" } } }
-                                    -- way of configuration
                                     pylsp_mypy = {
                                         enabled = true,
                                         -- this will make mypy to use the virtual environment(if activated before runing AstroNvim)
