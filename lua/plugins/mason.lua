@@ -19,17 +19,17 @@ return {
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     "lua_ls",
-                    "tsserver",
+                    "ts_ls",
                     "bashls",
                     "clangd",
                     "cssls",
                     "eslint",
                     "intelephense",
-                    "pyright",
+                    -- "pyright",
                     "bashls",
                     "gopls",
                     "intelephense",
-                    "rust_analyzer",
+                    -- "rust_analyzer",
                     "taplo",
                 },
             })
@@ -160,30 +160,58 @@ return {
                     })
                 end,
 
-                ["rust_analyzer"] = function()
-                    lspconfig.rust_analyzer.setup({
-                        on_attach = on_attach,
-                        settings = {
-                            ["rust-analyzer"] = {
-                                check = {
-                                    command = "clippy",
-                                },
-                                diagnostics = {
-                                    enable = true,
-                                },
-                            },
-                        },
-                    })
-                end,
+                -- ["rust_analyzer"] = function()
+                --     lspconfig.rust_analyzer.setup({
+                --         on_attach = on_attach,
+                --         settings = {
+                --             ["rust-analyzer"] = {
+                --                 check = {
+                --                     command = "clippy",
+                --                 },
+                --                 diagnostics = {
+                --                     enable = true,
+                --                 },
+                --             },
+                --         },
+                --     })
+                -- end,
 
                 ["pylsp"] = function()
                     local venv_path = os.getenv("VIRTUAL_ENV")
-                    local py_path = nil
+                    local python_path = nil
+                    local python_version = nil
+                    local site_packages_path = nil
+
+                    -- Not equal to nil
                     if venv_path ~= nil then
-                        py_path = venv_path .. "/bin/python3"
+                        -- Determine the path to the Python executable
+                        python_path = venv_path .. "/bin/python"
+
+                        -- Extract Python version from the executable path
+                        local handle = io.popen(python_path .. " -c 'import sys; print(sys.version_info.major, sys.version_info.minor)'")
+                        local version_output = handle:read("*a")
+                        handle:close()
+
+                        -- Parse version output
+                        local major_version, minor_version = version_output:match("(%d+) (%d+)")
+                        major_version = tonumber(major_version)
+                        minor_version = tonumber(minor_version)
+
+                        -- Construct the site-packages path
+                        site_packages_path = venv_path .. "/lib/python" .. major_version .. "." .. minor_version .. "/site-packages"
+                        -- Check if site_packages_path is valid before setting PYTHONPATH
+                        -- print("site_packages_path :"..site_packages_path)
+                        if site_packages_path and site_packages_path ~= "" then
+                            vim.fn.setenv("PYTHONPATH", site_packages_path)
+                        else
+                            -- print("Invalid site-packages path: " .. tostring(site_packages_path))
+                        end
                     else
-                        py_path = vim.g.python3_host_prog
+                        python_path = vim.g.python3_host_prog
+                        -- print("Virtual environment not found. Using system Python: " .. python_path)
+                        -- Fallback or handle non-virtual environment scenario
                     end
+
 
                     lspconfig.pylsp.setup({
                         on_attach = on_attach,
@@ -226,7 +254,7 @@ return {
                                         -- this will make mypy to use the virtual environment(if activated before runing AstroNvim)
                                         -- if not activated then it will use the system python(more specifically /usr/bin/python3)
                                         -- overrides = extra_args(),
-                                        overrides = { "--python-executable", py_path, true },
+                                        overrides = { "--python-executable", python_path, true },
                                         report_progress = true,
                                         live_mode = true,
                                     },
