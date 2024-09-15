@@ -28,7 +28,8 @@ local function start_lsp_client_for_buf(bufnr)
 
     -- Define LSP clients for each filetype
     local lsp_clients = {
-        python = { "pyright", "pylsp" },
+        -- python = { "pyright", "pylsp" },
+        python = { "pylsp" },
         lua = { "lua_ls" },
         -- Add other filetypes and their LSP clients here
     }
@@ -161,7 +162,7 @@ set("n", "<leader>L", ":vertical resize +5<CR>", { noremap = true, silent = true
 set("n", "<leader>H", ":vertical resize -5<CR>", { noremap = true, silent = true })
 set("n", "<leader>K", ":resize +5<CR>", { noremap = true, silent = true })
 set("n", "<leader>J", ":resize -5<CR>", { noremap = true, silent = true })
-set("n", "<leader>z", ":resize 999<CR>", { noremap = true, silent = true })
+-- set("n", "<leader>z", ":resize 999<CR>", { noremap = true, silent = true })
 
 -- File renaming
 set("n", "<leader>R", [[:lua RenameCurrentFile()<CR>]], { noremap = true, silent = true })
@@ -185,7 +186,6 @@ set("n", "<leader>F", ":foldopen<CR>", { noremap = true, silent = true })
 set("n", "<leader>l", ":Lazy<CR>", { noremap = true, silent = true })
 set("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 set("t", "<C-d>", "<C-d>", { noremap = true })
-set("n", "<C-s>", require("auto-session.session-lens").search_session, { noremap = true })
 set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- Disable Copilot tab mapping
@@ -195,7 +195,8 @@ vim.g.copilot_no_tab_map = true
 set("n", "<leader>i", "<cmd>LspInfo<CR>", { noremap = true, silent = true })
 set("n", "<leader>al", "<cmd>LspLog<CR>", { noremap = true, silent = true })
 
-set("n", "<leader>z", "<cmd>UndotreeToggle<CR>", { noremap = true, silent = true })
+-- set("n", "<leader>z", "<cmd>UndotreeToggle<CR>", { noremap = true, silent = true })
+set("n", "<leader>u", "<cmd>UndotreeToggle<CR>", { noremap = true, silent = true })
 
 set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 set('t', '<C-z>', '<C-\\><C-n><Cmd>ToggleTerm<CR>', { noremap = true, silent = true })
@@ -213,4 +214,5 @@ vim.api.nvim_set_keymap('n', '<leader>vn', ':botright vnew | :call inputsave() |
 vim.api.nvim_set_keymap('n', '<leader>sn', ':botright new | :call inputsave() | :let fname = input("New file name: ") | :call inputrestore() | :execute "file " . fname<CR>', { noremap = true, silent = false })
 
 
+set("n", "<leader>z", "<Cmd>WindowsMaximize<CR>")
 

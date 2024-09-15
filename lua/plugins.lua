@@ -94,4 +94,8 @@ return {
         dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
         opts = {}
     },
+    {
+        "mechatroner/rainbow_csv",
+        ft = "csv",
+    },
 }

@@ -15,7 +15,7 @@ return {
 				"eslint_d",
 				"intelephense",
 				"prettierd",
-				"rustfmt",
+				-- "rustfmt",
 				"shellcheck",
 				"stylua",
 				"typescript-language-server",

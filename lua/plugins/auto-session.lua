@@ -1,6 +1,6 @@
 return {
     "rmagatti/auto-session",
-    -- enabled = false,
+    enabled = false,
     config = function()
         require("auto-session").setup({
             log_level = "error",
@@ -13,6 +13,7 @@ return {
             post_cwd_changed_hook = function() -- example refreshing the lualine status line _after_ the cwd changes
                 require("lualine").refresh() -- refresh lualine so the new session name is displayed in the status bar
             end,
+            vim.keymap.set("n", "<C-s>", require("auto-session.session-lens").search_session, { noremap = true })
         })
     end,
 }
