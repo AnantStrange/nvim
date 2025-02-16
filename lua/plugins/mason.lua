@@ -13,8 +13,7 @@ return {
             local lspconfig = require("lspconfig")
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             local on_attach = function(client, bufnr)
-                vim.notify("LSP server attached: " .. client.name, "info", { title = "LSP Notification" })
-                vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+                Snacks.notifier.notify("LSP server attached: " .. client.name, "info", { title = "LSP Notification" })
             end
             require("mason-lspconfig").setup({
                 ensure_installed = {
@@ -25,7 +24,7 @@ return {
                     "cssls",
                     "eslint",
                     "intelephense",
-                    -- "pyright",
+                    "pyright",
                     "bashls",
                     "gopls",
                     "intelephense",
@@ -42,28 +41,41 @@ return {
                     })
                 end,
 
-                ["lua_ls"] = function()
-                    lspconfig.lua_ls.setup({
-                        capabilities = capabilities,
+                ["rust_analyzer"] = function()
+                    -- print("Rust LSP configuration is being applied!")
+                    -- Snacks.notifier.notify("Rust LSP configuration is being applied!")
+                    lspconfig.rust_analyzer.setup({
                         on_attach = on_attach,
                         settings = {
-                            Lua = {
+                            ["rust-analyzer"] = {
+                                check = {
+                                    command = "clippy",
+                                },
                                 diagnostics = {
-                                    globals = { "vim" },
-                                },
-                                workspace = {
-                                    -- Make the server aware of Neovim runtime files
-                                    library = vim.api.nvim_get_runtime_file("", true),
-                                },
-                                telemetry = {
-                                    enable = false,
+                                    enable = true,
                                 },
                             },
                         },
                     })
                 end,
 
+                ["lua_ls"] = function()
+                    -- print("Lua LSP configuration is being applied!")
+                    -- Snacks.notifier.notify("Lua LSP is being executed!")
+                    -- local lsp = require('lsp-zero').preset({})
+                    --
+                    -- lsp.on_attach(function(client, bufnr)
+                    --     lsp.default_keymaps({ buffer = bufnr })
+                    -- end)
+                    --
+                    -- require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+                    --
+                    -- lsp.setup()
+                end,
+
                 ["intelephense"] = function()
+                    -- print("PHP LSP configuration is being applied!")
+                    -- Snacks.notifier.notify("PHP LSP configuration is being applied!")
                     lspconfig.intelephense.setup({
                         capabilities = capabilities,
                         on_attach = on_attach,
@@ -141,6 +153,8 @@ return {
                 end,
 
                 ["gopls"] = function()
+                    -- print("GO LSP configuration is being applied!")
+                    -- Snacks.notifier.notify("GO LSP configuration is being applied!")
                     lspconfig.gopls.setup({
                         capabilities = capabilities,
                         cmd = { "gopls" },
@@ -160,26 +174,11 @@ return {
                     })
                 end,
 
-                -- ["rust_analyzer"] = function()
-                --     lspconfig.rust_analyzer.setup({
-                --         on_attach = on_attach,
-                --         settings = {
-                --             ["rust-analyzer"] = {
-                --                 check = {
-                --                     command = "clippy",
-                --                 },
-                --                 diagnostics = {
-                --                     enable = true,
-                --                 },
-                --             },
-                --         },
-                --     })
-                -- end,
-
                 ["pylsp"] = function()
+                    -- print("Python LSP configuration is being applied!")
+                    -- Snacks.notifier.notify("Python LSP is being executed!")
                     local venv_path = os.getenv("VIRTUAL_ENV")
                     local python_path = nil
-                    local python_version = nil
                     local site_packages_path = nil
 
                     -- Not equal to nil
@@ -188,7 +187,8 @@ return {
                         python_path = venv_path .. "/bin/python"
 
                         -- Extract Python version from the executable path
-                        local handle = io.popen(python_path .. " -c 'import sys; print(sys.version_info.major, sys.version_info.minor)'")
+                        local handle = io.popen(python_path ..
+                            " -c 'import sys; print(sys.version_info.major, sys.version_info.minor)'")
                         local version_output = handle:read("*a")
                         handle:close()
 
@@ -198,9 +198,10 @@ return {
                         minor_version = tonumber(minor_version)
 
                         -- Construct the site-packages path
-                        site_packages_path = venv_path .. "/lib/python" .. major_version .. "." .. minor_version .. "/site-packages"
+                        site_packages_path = venv_path ..
+                            "/lib/python" .. major_version .. "." .. minor_version .. "/site-packages"
                         -- Check if site_packages_path is valid before setting PYTHONPATH
-                        -- print("site_packages_path :"..site_packages_path)
+                        -- print("site_packages_path :" .. site_packages_path)
                         if site_packages_path and site_packages_path ~= "" then
                             vim.fn.setenv("PYTHONPATH", site_packages_path)
                         else
@@ -211,7 +212,6 @@ return {
                         -- print("Virtual environment not found. Using system Python: " .. python_path)
                         -- Fallback or handle non-virtual environment scenario
                     end
-
 
                     lspconfig.pylsp.setup({
                         on_attach = on_attach,
@@ -238,7 +238,7 @@ return {
                                     pycodestyle = { enabled = false },
                                     mccabe = { enabled = false },
                                     -- flake8 = { enabled = true },
-                                    flake8 = { enabled = false, maxLineLength = 121, ignore = { "F401", "W503" } },
+                                    flake8 = { enabled = true, maxLineLength = 121, ignore = { "F401", "W503" ,"E501","E231","E303","E225","E302"} },
                                     -- we can use 'setup.cfg' or .flake8, which is a config file for flake8
                                     -- at project root, first we will look for 'setup.cfg' or .flake8
                                     -- and if not found then it follows these inline settings.
@@ -265,6 +265,7 @@ return {
                         capabilities = capabilities,
                     })
                 end,
+
             })
         end,
     },

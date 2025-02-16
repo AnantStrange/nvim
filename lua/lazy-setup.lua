@@ -16,5 +16,12 @@ require("lazy").setup("plugins", {
     change_detection = {
         notify = false,
     },
-    defaults = { lazy = true }
+    defaults = { lazy = true },
+    profiling = {
+        -- Enables extra stats on the debug tab related to the loader cache.
+        -- Additionally gathers stats about all package.loaders
+        loader = false,
+        -- Track each new require in the Lazy profiling tab
+        require = false,
+    },
 })

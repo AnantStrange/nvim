@@ -29,7 +29,6 @@ local function start_lsp_client_for_buf(bufnr)
     -- Define LSP clients for each filetype
     local lsp_clients = {
         -- python = { "pyright", "pylsp" },
-        python = { "pylsp" },
         lua = { "lua_ls" },
         -- Add other filetypes and their LSP clients here
     }
@@ -45,7 +44,8 @@ local function start_lsp_client_for_buf(bufnr)
     end
 end
 
-vim.api.nvim_create_autocmd("BufReadPost", { pattern = "*",
+vim.api.nvim_create_autocmd("BufReadPost", {
+    pattern = "*",
     callback = function()
         local bufnr = vim.api.nvim_get_current_buf()
         start_lsp_client_for_buf(bufnr)
@@ -77,9 +77,6 @@ set("n", "<C-u>", "<C-u>zz")
 set("n", "n", "nzzzv")
 set("n", "N", "Nzzzv")
 
--- Commenting
--- set("n", "<leader>c", ":CommentToggle<CR>")
--- set("v", "<leader>c", ":CommentToggle<CR>")
 -- Comment or uncomment the current line in normal mode
 set("n", "<leader>c", "gcc", { remap = true, silent = true })
 set("v", "<leader>c", "gc", { remap = true, silent = true })
@@ -117,6 +114,9 @@ local function insert_shebang_and_make_executable()
         shebang_added = true
     elseif filetype == 'sh' then
         vim.cmd('normal! ggO#! /usr/bin/env sh')
+        shebang_added = true
+    elseif filetype == 'r' then
+        vim.cmd('normal! ggO#! /usr/bin/env Rscript')
         shebang_added = true
     end
 
@@ -200,7 +200,7 @@ set("n", "<leader>u", "<cmd>UndotreeToggle<CR>", { noremap = true, silent = true
 
 set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 set('t', '<C-z>', '<C-\\><C-n><Cmd>ToggleTerm<CR>', { noremap = true, silent = true })
-set('t', '<M-h>', '<Cmd>TmuxNavigateLeft<CR>', { noremap = true})
+set('t', '<M-h>', '<Cmd>TmuxNavigateLeft<CR>', { noremap = true })
 set({ "n", "v", "x" }, "<leader>j", "<Cmd>ToggleTerm size=20<CR>")
 set({ "n", "v", "x" }, "<leader>J", "<Cmd>ToggleTerm direction=vertical size=70<CR>", { noremap = true, silent = true })
 set({ "n", "i", "v", "x" }, "<leader>k", "<Cmd>TermSelect<CR>")
@@ -208,11 +208,14 @@ set("n", "<leader>m", "<Cmd>Mason<CR>")
 
 
 -- Vertical split on the right and create a new file
-vim.api.nvim_set_keymap('n', '<leader>vn', ':botright vnew | :call inputsave() | :let fname = input("New file name: ") | :call inputrestore() | :execute "file " . fname<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>vn',
+    ':botright vnew | :call inputsave() | :let fname = input("New file name: ") | :call inputrestore() | :execute "file " . fname<CR>',
+    { noremap = true, silent = false })
 
 -- Horizontal split at the bottom and create a new file
-vim.api.nvim_set_keymap('n', '<leader>sn', ':botright new | :call inputsave() | :let fname = input("New file name: ") | :call inputrestore() | :execute "file " . fname<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>sn',
+    ':botright new | :call inputsave() | :let fname = input("New file name: ") | :call inputrestore() | :execute "file " . fname<CR>',
+    { noremap = true, silent = false })
 
 
 set("n", "<leader>z", "<Cmd>WindowsMaximize<CR>")
-
