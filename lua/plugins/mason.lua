@@ -60,17 +60,16 @@ return {
                 end,
 
                 ["lua_ls"] = function()
-                    -- print("Lua LSP configuration is being applied!")
-                    -- Snacks.notifier.notify("Lua LSP is being executed!")
-                    -- local lsp = require('lsp-zero').preset({})
-                    --
-                    -- lsp.on_attach(function(client, bufnr)
-                    --     lsp.default_keymaps({ buffer = bufnr })
-                    -- end)
-                    --
-                    -- require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
-                    --
-                    -- lsp.setup()
+                    lspconfig.lua_ls.setup({
+                        settings = {
+                            Lua = {
+                                diagnostics = {
+                                    globals = { 'vim','Snacks' }
+                                }
+
+                            }
+                        }
+                    })
                 end,
 
                 ["intelephense"] = function()
@@ -238,7 +237,7 @@ return {
                                     pycodestyle = { enabled = false },
                                     mccabe = { enabled = false },
                                     -- flake8 = { enabled = true },
-                                    flake8 = { enabled = true, maxLineLength = 121, ignore = { "F401", "W503" ,"E501","E231","E303","E225","E302"} },
+                                    flake8 = { enabled = true, maxLineLength = 121, ignore = { "F401", "W503", "E501", "E231", "E303", "E225", "E302" } },
                                     -- we can use 'setup.cfg' or .flake8, which is a config file for flake8
                                     -- at project root, first we will look for 'setup.cfg' or .flake8
                                     -- and if not found then it follows these inline settings.
