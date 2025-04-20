@@ -1,9 +1,16 @@
 return {
     {
         "hrsh7th/cmp-nvim-lsp",
+        enabled = false,
+    },
+    {
+        "hrsh7th/cmp-path",
+        enabled = false,
+        event = "VeryLazy",
     },
     {
         "L3MON4D3/LuaSnip",
+        enabled = false,
         event = "InsertEnter",
         dependencies = {
             "saadparwaiz1/cmp_luasnip",
@@ -13,6 +20,7 @@ return {
 
     {
         "hrsh7th/nvim-cmp",
+        enabled = false,
         event = "VeryLazy",
         config = function()
             local cmp = require("cmp")

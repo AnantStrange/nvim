@@ -11,7 +11,7 @@ return {
                 focusable = true,
                 style = "rounded",
                 border = "rounded",
-                source = "always",
+                source = true,
                 header = "",
                 prefix = "",
             },

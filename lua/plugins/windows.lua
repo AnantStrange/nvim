@@ -1,6 +1,6 @@
 return {
     "anuvyklack/windows.nvim",
-    lazy = false,
+    event = "VeryLazy",
     dependencies = {
         "anuvyklack/middleclass",
         "anuvyklack/animation.nvim"
@@ -9,6 +9,7 @@ return {
         vim.o.winwidth = 10
         vim.o.winminwidth = 10
         vim.o.equalalways = false
+        vim.keymap.set("n", "<leader>z", "<Cmd>WindowsMaximize<CR>")
         require('windows').setup()
     end
 }

@@ -1,57 +1,70 @@
 return {
     {
-        "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-    },
-    {
-        "hrsh7th/cmp-path",
-        event = "VeryLazy",
-    },
-    {
         "preservim/tagbar",
+        cmd = "TagbarToggle",
         keys = {
-            { "<leader>t", "<cmd>TagbarToggle<cr>", desc = "Toggle Tagbar" },
+            { "<leader>t", ":TagbarToggle<cr>", desc = "Toggle Tagbar" },
         },
     },
     {
         "mbbill/undotree",
         cmd = "UndotreeToggle",
-    },
-    {
-        "folke/which-key.nvim",
-        event = "VeryLazy",
         keys = {
-            {
-                "<leader>?",
-                function()
-                    require("which-key").show({ global = false })
-                end,
-                desc = "Buffer Local Keymaps (which-key)",
-            },
+            { "<leader>u", ":UndotreeToggle<cr>", desc = "Toggle Tagbar" },
         },
     },
     {
         'MeanderingProgrammer/markdown.nvim',
         -- enabled = false,
         ft = 'markdown',
-        config = function()
-            require('render-markdown').setup({
-                heading = {
-                    width = 'block',
-                }
-            })
-        end
+        opts = {
+            heading = {
+                width = 'block',
+            }
+        }
     },
     {
         "SmiteshP/nvim-navbuddy",
-        keys = "Navbuddy",
+        cmd = "Navbuddy",
         dependencies = {
             "SmiteshP/nvim-navic",
             "MunifTanjim/nui.nvim"
         },
-        opts = { lsp = { auto_attach = true } }
+        opts = { lsp = { auto_attach = true } },
+        keys = {
+            { "<leader>n", "<Cmd>Navbuddy<CR>", desc = "Toggle Navbuddy" },
+        },
     },
     {
         "mechatroner/rainbow_csv",
         ft = "csv",
+    },
+    {
+        -- CSS - HEX visual Color
+        "norcalli/nvim-colorizer.lua",
+        cmd = { "ColorizerAttachToBuffer", "ColorizerToggle" },
+    },
+    {
+        "lewis6991/gitsigns.nvim",
+        event = "VeryLazy",
+        -- enabled = false,
+        config = function()
+            require("gitsigns").setup()
+        end,
+        keys = {
+            {"]c", "<Cmd>Gitsigns next_hunk<CR>"},
+            {"[c", "<Cmd>Gitsigns prev_hunk<CR>"},
+            {"<leader>hp", "<Cmd>Gitsigns preview_hunk<CR>", desc = "Preview hunk diff", mode = {"n","v","x"}},
+        },
+    },
+    {
+        "sindrets/diffview.nvim",
+        cmd = "DiffviewOpen",
+    },
+    {
+        'akinsho/toggleterm.nvim',
+        version = "*",
+        config = true,
+        event = "VeryLazy",
     },
 }

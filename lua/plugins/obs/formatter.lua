@@ -31,7 +31,7 @@ return {
 
     config = function()
         local util = require "formatter.util"
-        require("formatter").setup({
+        opts = {
             logging = true,
             log_level = vim.log.levels.WARN,
             filetype = {
@@ -118,7 +118,7 @@ return {
                     end,
                 },
             },
-        })
+        }
     end
 
 }
